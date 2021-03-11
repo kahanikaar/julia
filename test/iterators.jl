@@ -428,8 +428,13 @@ end
 @test length(product(1:2,1:10,4:6)) == 60
 @test Base.IteratorSize(product(1:2, countfrom(1))) == Base.IsInfinite()
 
+# intersection
+@test intersect(product(1:3, 4:6), product(2:4, 3:5)) == ProductIterator((2:3, 4:5))
+@test intersect(product(1:3, [4 5 ; 6 7]), product(2:4, [7 6 ; 5 4])).iterators == (2:3, [4, 6, 5, 7])
+
 # flatten
 # -------
+
 @test collect(flatten(Any[1:2, 4:5])) == Any[1,2,4,5]
 @test collect(flatten(Any[flatten(Any[1:2, 6:5]), flatten(Any[10:7, 10:9])])) == Any[1,2]
 @test collect(flatten(Any[flatten(Any[1:2, 4:5]), flatten(Any[6:7, 8:9])])) == Any[1,2,4,5,6,7,8,9]
